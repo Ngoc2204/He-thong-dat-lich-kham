@@ -34,7 +34,7 @@
         <nav>
             <ul class="hidden md:flex space-x-6 text-gray-700 font-medium items-center">
                 <li><a href="{{ route('home') }}" class="hover:text-blue-600">Trang chủ</a></li>
-                <li><a href="#" class="hover:text-blue-600">Giới thiệu</a></li>
+                <li><a href="{{ route('about') }}" class="hover:text-blue-600">Giới thiệu</a></li>
                 <li><a href="#" class="hover:text-blue-600">Bác sĩ</a></li>
 
                 <li class="nav-item">
@@ -42,10 +42,10 @@
                         Dịch vụ <i class="fas fa-chevron-down ml-1 text-xs"></i>
                     </a>
                     <div class="dropdown">
-                        <a href="#">Vệ Sinh Răng Miệng</a>
-                        <a href="#">Trám Răng Thẩm Mỹ</a>
-                        <a href="#">Khám Răng Tổng Quát</a>
-                        <a href="#">Niềng Răng Thẩm Mỹ</a>
+                        <a href="{{ route('services.cleaning') }}">Vệ Sinh Răng Miệng</a>
+                        <a href="{{ route('services.filling') }}">Trám Răng Thẩm Mỹ</a>
+                        <a href="{{ route('services.checkup') }}">Khám Răng Tổng Quát</a>
+                        <a href="{{ route('services.braces') }}">Niềng Răng Thẩm Mỹ</a>
                     </div>
                 </li>
 
@@ -60,7 +60,7 @@
         <div class="hidden md:flex items-center space-x-4">
             <!-- Social Icons -->
             <div class="flex items-center space-x-3">
-                <a href="https://facebook.com" target="_blank" class="w-10 h-10 flex items-center justify-center bg-gray-100 rounded-full text-blue-600 hover:bg-blue-600 hover:text-white transition">
+                <a href="https://www.facebook.com/tat.ngoc.2004" target="_blank" class="w-10 h-10 flex items-center justify-center bg-gray-100 rounded-full text-blue-600 hover:bg-blue-600 hover:text-white transition">
                     <i class="fab fa-facebook-f"></i>
                 </a>
                 <a href="https://twitter.com" target="_blank" class="w-10 h-10 flex items-center justify-center bg-gray-100 rounded-full text-blue-500 hover:bg-blue-500 hover:text-white transition">
@@ -74,10 +74,29 @@
                 </a>
             </div>
 
-            <a href="#" class="group relative inline-flex items-center justify-center px-6 py-3 font-semibold text-white transition-all duration-300 ease-in-out transform bg-gradient-to-r from-blue-600 to-blue-700 rounded-lg shadow-lg hover:shadow-xl hover:scale-105 hover:from-blue-700 hover:to-blue-800 active:scale-95">
+            @auth
+            <!-- Nếu đã đăng nhập -->
+            <div class="flex items-center space-x-3">
+                <span class="font-semibold text-gray-700">
+                    {{ Auth::user()->name }}
+                </span>
+
+                <form action="{{ route('logout') }}" method="POST">
+                    @csrf
+                    <button type="submit" class="group relative inline-flex items-center justify-center px-6 py-3 font-semibold text-white transition-all duration-300 ease-in-out transform bg-gradient-to-r from-red-500 to-red-600 rounded-lg shadow-lg hover:shadow-xl hover:scale-105 hover:from-red-600 hover:to-red-700 active:scale-95">
+                        <span class="relative z-10">Đăng xuất</span>
+                        <div class="absolute inset-0 w-full h-full transition-all duration-300 ease-out transform bg-white rounded-lg opacity-0 group-hover:opacity-10"></div>
+                    </button>
+                </form>
+            </div>
+            @else
+            <!-- Nếu chưa đăng nhập -->
+            <a href="{{ route('login') }}" class="group relative inline-flex items-center justify-center px-6 py-3 font-semibold text-white transition-all duration-300 ease-in-out transform bg-gradient-to-r from-blue-600 to-blue-700 rounded-lg shadow-lg hover:shadow-xl hover:scale-105 hover:from-blue-700 hover:to-blue-800 active:scale-95">
                 <span class="relative z-10">Đăng nhập</span>
                 <div class="absolute inset-0 w-full h-full transition-all duration-300 ease-out transform bg-white rounded-lg opacity-0 group-hover:opacity-10"></div>
             </a>
+            @endauth
         </div>
+
     </div>
 </header>
