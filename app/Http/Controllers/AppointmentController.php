@@ -6,9 +6,14 @@ use App\Models\{Appointment, Dentist, Service, Schedule};
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\AppointmentNotification;
+use Illuminate\Support\Facades\Log;
+
 
 class AppointmentController extends Controller
 {
+    // Hiển thị form đặt lịch
     public function create(Request $request)
     {
         $dentists = Dentist::with('user')->get();
@@ -29,39 +34,41 @@ class AppointmentController extends Controller
             );
         }
 
-        return view('appointments.create', compact('dentists','services','slots','selected'));
+        return view('appointments.create', compact('dentists', 'services', 'slots', 'selected'));
     }
 
+    // Lưu lịch hẹn mới
     public function store(Request $request)
     {
         $data = $request->validate([
-            'dentist_id' => ['required','exists:dentists,id'],
-            'service_id' => ['required','exists:services,id'],
-            'date'       => ['required','date','after_or_equal:today'],
-            'time'       => ['required','date_format:H:i'],
-            'notes'      => ['nullable','string','max:1000'],
+            'dentist_id' => ['required', 'exists:dentists,id'],
+            'service_id' => ['required', 'exists:services,id'],
+            'date'       => ['required', 'date', 'after_or_equal:today'],
+            'time'       => ['required', 'date_format:H:i'],
+            'notes'      => ['nullable', 'string', 'max:1000'],
         ]);
 
         $service = Service::findOrFail($data['service_id']);
-        $start = Carbon::parse($data['date'].' '.$data['time']);
+        $start = Carbon::parse($data['date'] . ' ' . $data['time']);
         $end   = (clone $start)->addMinutes($service->duration_mins ?? 30);
 
-        // must be inside schedule window
+        // kiểm tra trong giờ làm việc
         if (!$this->isWithinSchedule($data['dentist_id'], $start, $end)) {
-            return back()->withErrors(['time' => 'Selected time is out of dentist schedule.'])->withInput();
+            return back()->withErrors(['time' => 'Giờ này nằm ngoài lịch làm việc của bác sĩ.'])->withInput();
         }
 
-        // must not overlap any existing appointment
+        // kiểm tra trùng giờ
         $overlap = Appointment::where('dentist_id', $data['dentist_id'])
             ->where('starts_at', '<', $end)
             ->where('ends_at', '>', $start)
             ->exists();
 
         if ($overlap) {
-            return back()->withErrors(['time' => 'Time slot already booked.'])->withInput();
+            return back()->withErrors(['time' => 'Khung giờ này đã được đặt.'])->withInput();
         }
 
-        Appointment::create([
+        // tạo lịch hẹn
+        $appointment = Appointment::create([
             'patient_id' => Auth::id(),
             'dentist_id' => $data['dentist_id'],
             'service_id' => $data['service_id'],
@@ -71,49 +78,76 @@ class AppointmentController extends Controller
             'notes'      => $data['notes'] ?? null,
         ]);
 
-        return redirect()->route('appointments.mine')->with('success','Appointment booked!');
+        // gửi mail thông báo
+        try {
+            Mail::to(Auth::user()->email)
+                ->send(new AppointmentNotification($appointment, 'created'));
+        } catch (\Exception $e) {
+            Log::error('Gửi mail thất bại: ' . $e->getMessage());
+        }
+
+        return redirect()->route('appointments.mine')->with('success', 'Đặt lịch thành công!');
     }
 
+    // Danh sách lịch hẹn của bệnh nhân
     public function myAppointments()
     {
-        $apps = Appointment::with(['dentist.user','service'])
+        $apps = Appointment::with(['dentist.user', 'service'])
             ->where('patient_id', Auth::id())
-            ->orderBy('starts_at','desc')
+            ->orderBy('starts_at', 'desc')
             ->paginate(10);
 
         return view('appointments.mine', compact('apps'));
     }
 
+    // Hủy lịch hẹn
     public function cancel(Appointment $appointment)
     {
         abort_unless($appointment->patient_id === Auth::id(), 403);
-        if (in_array($appointment->status, ['completed','cancelled'])) {
-            return back()->withErrors(['status' => 'Appointment can no longer be cancelled.']);
+
+        if (in_array($appointment->status, ['completed', 'cancelled'])) {
+            return back()->withErrors(['status' => 'Không thể hủy lịch đã hoàn tất hoặc bị hủy.']);
         }
+
         $appointment->status = 'cancelled';
         $appointment->save();
 
-        return back()->with('success','Appointment cancelled.');
+        // gửi mail thông báo hủy
+        try {
+            Mail::to(Auth::user()->email)
+                ->send(new AppointmentNotification($appointment, 'cancelled'));
+        } catch (\Exception $e) {
+            Log::error('Mail hủy lịch thất bại: ' . $e->getMessage());
+        }
+
+        return back()->with('success', 'Đã hủy lịch hẹn.');
     }
 
+    // Kiểm tra giờ có nằm trong lịch làm việc không
     private function isWithinSchedule(int $dentistId, Carbon $start, Carbon $end): bool
     {
-        $weekday = (int) $start->dayOfWeek; // 0..6
-        $schedule = Schedule::where('dentist_id',$dentistId)
-            ->where('weekday',$weekday)->first();
+        $weekday = (int) $start->dayOfWeek; // 0-6
+        $schedule = Schedule::where('dentist_id', $dentistId)
+            ->where('weekday', $weekday)
+            ->first();
 
         if (!$schedule) return false;
 
-        $s = Carbon::parse($start->toDateString().' '.$schedule->start_time);
-        $e = Carbon::parse($start->toDateString().' '.$schedule->end_time);
+        $s = Carbon::parse($start->toDateString() . ' ' . $schedule->start_time);
+        $e = Carbon::parse($start->toDateString() . ' ' . $schedule->end_time);
+
         return $start->greaterThanOrEqualTo($s) && $end->lessThanOrEqualTo($e);
     }
 
+    // Sinh các slot khả dụng
     private function generateSlots(int $dentistId, int $serviceId, string $date): array
     {
         $service = Service::findOrFail($serviceId);
         $weekday = (int) Carbon::parse($date)->dayOfWeek;
-        $schedule = Schedule::where('dentist_id',$dentistId)->where('weekday',$weekday)->first();
+        $schedule = Schedule::where('dentist_id', $dentistId)
+            ->where('weekday', $weekday)
+            ->first();
+
         if (!$schedule) return [];
 
         $start = Carbon::parse("$date {$schedule->start_time}");
@@ -128,10 +162,12 @@ class AppointmentController extends Controller
                 ->where('starts_at', '<', $slotEnd)
                 ->where('ends_at', '>', $t)
                 ->exists();
+
             if (!$overlap) {
                 $slots[] = $t->format('H:i');
             }
         }
+
         return $slots;
     }
 }
