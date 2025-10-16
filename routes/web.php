@@ -20,6 +20,7 @@ Route::get('/register', [AuthController::class, 'showRegister'])->name('register
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout')->middleware('auth');
 
+
 // Patient booking & my appointments
 Route::middleware(['auth', 'role:patient'])->group(function () {
     Route::get('/book', [AppointmentController::class, 'create'])->name('appointments.create'); // shows form & slots
