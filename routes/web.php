@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\ServiceController as AdminServiceController;
 use App\Http\Controllers\Admin\ScheduleController as AdminScheduleController;
 use App\Http\Controllers\Admin\AppointmentController as AdminAppointmentController;
 use App\Http\Controllers\Dentist\DashboardController as DentistDashboardController;
+use App\Http\Controllers\Dentist\ScheduleController as DentistScheduleController;
 
 // Home
 Route::get('/', function () { return view('home'); })->name('home');
@@ -33,6 +34,9 @@ Route::middleware(['auth', 'role:patient'])->group(function () {
 Route::prefix('dentist')->middleware(['auth', 'role:dentist'])->group(function () {
     Route::get('/', [DentistDashboardController::class, 'index'])->name('dentist.dashboard');
     Route::post('/appointments/{appointment}/status', [DentistDashboardController::class, 'updateStatus'])->name('dentist.appointments.status');
+    Route::get('/schedules', [DentistScheduleController::class, 'index'])->name('dentist.schedules.index');
+Route::get('/schedules/create', [DentistScheduleController::class, 'create'])->name('dentist.schedules.create');
+Route::post('/schedules', [DentistScheduleController::class, 'store'])->name('dentist.schedules.store');
 });
 
 // Admin area
