@@ -13,87 +13,93 @@
 
 <body>
     <nav class="navbar navbar-expand-lg shadow-sm py-3 bg-white">
-        <div class="container align-items-center">
-            <!-- LOGO -->
-            <a class="navbar-brand d-flex align-items-center gap-2" href="{{ route('home') }}">
-                <img src="{{ asset('images/logo1.png') }}" alt="Logo" style="height:40px;">
+        <div class="container-fluid px-4">
+            <div class="d-flex w-100 align-items-center justify-content-between">
+                <!-- LOGO -->
+                <a class="navbar-brand d-flex align-items-center gap-2" href="{{ route('home') }}">
+                    <img src="{{ asset('images/logo1.png') }}" alt="Logo" style="height:40px;">
 
-            </a>
+                </a>
 
-            <!-- TOGGLER -->
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
-                <span class="navbar-toggler-icon"></span>
-            </button>
+                <!-- MENU (canh giữa) -->
+                <div class="d-none d-lg-flex justify-content-center flex-grow-1">
+                    <ul class="navbar-nav fw-semibold">
+                        <li class="nav-item">
+                            <a class="nav-link px-3 {{ request()->routeIs('home') ? 'text-teal fw-bold border-bottom border-2 border-teal' : '' }}"
+                                href="{{ route('home') }}">Trang chủ</a>
+                        </li>
+                        <li class="nav-item"><a class="nav-link px-3" href="#">Giới thiệu</a></li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle px-3" href="#" role="button"
+                                data-bs-toggle="dropdown">Dịch vụ</a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="#">Tẩy trắng răng</a></li>
+                                <li><a class="dropdown-item" href="#">Trám răng</a></li>
+                                <li><a class="dropdown-item" href="#">Khám tổng quát</a></li>
+                            </ul>
+                        </li>
 
-            <!-- MENU -->
-            <div class="navbar-collapse justify-content-center" id="navMenu">
-                <ul class="navbar-nav fw-semibold">
-                    <li class="nav-item"><a
-                            class="nav-link px-3 {{ request()->routeIs('home') ? 'text-teal fw-bold border-bottom border-2 border-teal' : '' }}"
-                            href="{{ route('home') }}">Trang chủ</a></li>
-                    <li class="nav-item"><a class="nav-link px-3" href="#">Giới thiệu</a></li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle px-3" href="#" role="button"
-                            data-bs-toggle="dropdown">Dịch vụ</a>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#">Tẩy trắng răng</a></li>
-                            <li><a class="dropdown-item" href="#">Trám răng</a></li>
-                            <li><a class="dropdown-item" href="#">Khám tổng quát</a></li>
-                        </ul>
-                    </li>
-                    <li class="nav-item"><a class="nav-link px-3" href="#">Hướng dẫn khách hàng</a></li>
-                    <li class="nav-item"><a class="nav-link px-3" href="#">Kiến thức</a></li>
-                    <li class="nav-item"><a class="nav-link px-3" href="#">Liên hệ</a></li>
-                </ul>
-            </div>
+                        <li class="nav-item"><a class="nav-link px-3" href="#">Kiến thức</a></li>
 
-            <!-- ICONS + BUTTON -->
-            <div class="d-flex align-items-center gap-3">
-                <div class="d-flex gap-2">
-                    <a href="#" class="text-dark"><i class="bi bi-facebook fs-5"></i></a>
-                    <a href="#" class="text-dark"><i class="bi bi-twitter fs-5"></i></a>
-                    <a href="#" class="text-dark"><i class="bi bi-instagram fs-5"></i></a>
-                    <a href="#" class="text-dark"><i class="bi bi-pinterest fs-5"></i></a>
+                    </ul>
                 </div>
 
-                @auth
-                    {{-- Nếu user đã đăng nhập --}}
-                    <a href="{{ route('appointments.create') }}" class="btn text-white fw-semibold ms-3"
-                        style="background:linear-gradient(90deg,#2dd4bf,#3b82f6);border-radius:50px;padding:1.5rem 1.2rem;width:170px;">
-                        <i class="bi bi-calendar2-check"></i> Đặt lịch khám
-                    </a>
+                <!-- PHẦN BÊN PHẢI -->
+                <div class="d-flex align-items-center gap-3 flex-shrink-0">
+                    <!-- Mạng xã hội -->
+                    <div class="d-none d-lg-flex gap-2">
+                        <a href="#" class="text-dark"><i class="bi bi-facebook fs-5"></i></a>
+                        <a href="#" class="text-dark"><i class="bi bi-twitter fs-5"></i></a>
+                        <a href="#" class="text-dark"><i class="bi bi-instagram fs-5"></i></a>
+                        <a href="#" class="text-dark"><i class="bi bi-pinterest fs-5"></i></a>
+                    </div>
 
-                    {{-- Hiển thị tên và nút đăng xuất --}}
-                    <div class="dropdown ms-3">
-                        <a class="nav-link dropdown-toggle fw-semibold" href="#" role="button"
-                            data-bs-toggle="dropdown">
-                            <i class="bi bi-person-circle me-1"></i> {{ Auth::user()->name }}
+                    <!-- Kiểm tra đăng nhập -->
+                    @auth
+                        <a href="{{ route('appointments.create') }}" class="btn text-white fw-semibold px-4"
+                            style="background:linear-gradient(90deg,#2dd4bf,#3b82f6);border-radius:50px;">
+                            <i class="bi bi-calendar2-check"></i> Đặt lịch khám
                         </a>
-                        <ul class="dropdown-menu dropdown-menu-end">
-                            <li>
-                                <form method="POST" action="{{ route('logout') }}">
-                                    @csrf
-                                    <button type="submit" class="dropdown-item">
-                                        <i class="bi bi-box-arrow-right me-2"></i>Đăng xuất
-                                    </button>
-                                </form>
-                            </li>
-                        </ul>
-                    </div>
-                @else
-                    {{-- Nếu chưa đăng nhập --}}
-                    <div class="ms-3 d-flex gap-2">
-                        <a href="{{ route('login') }}" class="btn btn-outline-primary px-3">Đăng nhập</a>
-                        <a href="{{ route('register') }}" class="btn btn-primary px-3 text-white"
-                            style="background:linear-gradient(90deg,#2dd4bf,#3b82f6);border:none;">
-                            Đăng ký
-                        </a>
-                    </div>
-                @endauth
+
+                        <div class="dropdown">
+                            <a class="nav-link dropdown-toggle fw-semibold d-flex align-items-center" href="#"
+                                role="button" data-bs-toggle="dropdown">
+                                <i class="bi bi-person-circle me-2"></i>
+                                <span class="d-none d-sm-inline">{{ Str::limit(Auth::user()->name, 15) }}</span>
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-end">
+                                <li>
+                                    <a class="dropdown-item" href="{{ route('appointments.mine') }}">
+                                        <i class="bi bi-clock-history me-2"></i>Lịch sử đặt lịch
+                                    </a>
+                                </li>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                <li>
+                                    <form method="POST" action="{{ route('logout') }}">
+                                        @csrf
+                                        <button type="submit" class="dropdown-item">
+                                            <i class="bi bi-box-arrow-right me-2"></i>Đăng xuất
+                                        </button>
+                                    </form>
+                                </li>
+                            </ul>
+                        </div>
+                    @else
+                        <div class="d-flex gap-2">
+                            <a href="{{ route('login') }}" class="btn btn-outline-primary px-3">Đăng nhập</a>
+                            <a href="{{ route('register') }}" class="btn text-white px-3"
+                                style="background:linear-gradient(90deg,#2dd4bf,#3b82f6);border:none;">
+                                Đăng ký
+                            </a>
+                        </div>
+                    @endauth
+                </div>
             </div>
-
         </div>
     </nav>
+
 
 
     <!-- Đổi thành -->
