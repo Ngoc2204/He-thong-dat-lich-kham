@@ -26,7 +26,7 @@
             </button>
 
             <!-- MENU -->
-            <div class="collapse navbar-collapse justify-content-center" id="navMenu">
+            <div class="navbar-collapse justify-content-center" id="navMenu">
                 <ul class="navbar-nav fw-semibold">
                     <li class="nav-item"><a
                             class="nav-link px-3 {{ request()->routeIs('home') ? 'text-teal fw-bold border-bottom border-2 border-teal' : '' }}"
@@ -56,11 +56,42 @@
                     <a href="#" class="text-dark"><i class="bi bi-pinterest fs-5"></i></a>
                 </div>
 
-                <a href="{{ route('appointments.create') }}" class="btn text-white fw-semibold ms-3"
-                    style="background:linear-gradient(90deg,#2dd4bf,#3b82f6);border-radius:50px;padding:1.5rem 1.2rem;width:170px;">
-                    <i class="bi bi-calendar2-check"></i> Đặt lịch khám
-                </a>
+                @auth
+                    {{-- Nếu user đã đăng nhập --}}
+                    <a href="{{ route('appointments.create') }}" class="btn text-white fw-semibold ms-3"
+                        style="background:linear-gradient(90deg,#2dd4bf,#3b82f6);border-radius:50px;padding:1.5rem 1.2rem;width:170px;">
+                        <i class="bi bi-calendar2-check"></i> Đặt lịch khám
+                    </a>
+
+                    {{-- Hiển thị tên và nút đăng xuất --}}
+                    <div class="dropdown ms-3">
+                        <a class="nav-link dropdown-toggle fw-semibold" href="#" role="button"
+                            data-bs-toggle="dropdown">
+                            <i class="bi bi-person-circle me-1"></i> {{ Auth::user()->name }}
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li>
+                                <form method="POST" action="{{ route('logout') }}">
+                                    @csrf
+                                    <button type="submit" class="dropdown-item">
+                                        <i class="bi bi-box-arrow-right me-2"></i>Đăng xuất
+                                    </button>
+                                </form>
+                            </li>
+                        </ul>
+                    </div>
+                @else
+                    {{-- Nếu chưa đăng nhập --}}
+                    <div class="ms-3 d-flex gap-2">
+                        <a href="{{ route('login') }}" class="btn btn-outline-primary px-3">Đăng nhập</a>
+                        <a href="{{ route('register') }}" class="btn btn-primary px-3 text-white"
+                            style="background:linear-gradient(90deg,#2dd4bf,#3b82f6);border:none;">
+                            Đăng ký
+                        </a>
+                    </div>
+                @endauth
             </div>
+
         </div>
     </nav>
 
