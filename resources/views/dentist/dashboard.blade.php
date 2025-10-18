@@ -25,9 +25,7 @@
                     <i class="bi bi-calendar-x display-5 d-block mb-3"></i>
                     <h5>Chưa có lịch hẹn nào</h5>
                     <p>Các lịch hẹn của bạn sẽ hiển thị tại đây khi bệnh nhân đặt lịch.</p>
-                    <a href="{{ route('dentist.schedules.create') }}" class="btn btn-outline-primary mt-3">
-                        <i class="bi bi-calendar-plus"></i> Đăng ký lịch làm việc
-                    </a>
+                   
                 </div>
             @else
                 <div class="table-responsive">

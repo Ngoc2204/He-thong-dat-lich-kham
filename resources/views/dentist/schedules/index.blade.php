@@ -13,7 +13,7 @@
     {{-- Nút thêm mới --}}
     <div class="d-flex justify-content-end mb-4">
         <a href="{{ route('dentist.schedules.create') }}" class="btn btn-success rounded-3 shadow-sm px-4">
-            <i class="bi bi-plus-circle"></i> Thêm lịch làm việc
+            <i class="bi bi-plus-circle"></i> Dăng ký lịch làm việc
         </a>
     </div>
 
