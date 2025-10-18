@@ -1,0 +1,269 @@
+/* Appointments Booking Page Styles */
+.appointment-booking-page {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 3rem 1rem;
+}
+
+/* Header */
+.booking-header .icon-wrapper {
+  width: 80px;
+  height: 80px;
+  margin: 0 auto;
+  background: linear-gradient(135deg, #2dd4bf, #3b82f6);
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 10px 30px rgba(45, 212, 191, 0.3);
+}
+
+.booking-header .icon-wrapper i {
+  font-size: 2.5rem;
+  color: white;
+}
+
+.booking-header h2 {
+  font-size: 2rem;
+  color: #1e293b;
+}
+
+/* Form Card */
+.booking-form-card {
+  background: white;
+  padding: 2rem;
+  border-radius: 20px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  border: 1px solid rgba(45, 212, 191, 0.1);
+}
+
+.form-select-modern,
+.form-control-modern {
+  border: 2px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 0.75rem 1rem;
+  font-size: 0.95rem;
+  transition: all 0.3s ease;
+}
+
+.form-select-modern:focus,
+.form-control-modern:focus {
+  border-color: #2dd4bf;
+  box-shadow: 0 0 0 4px rgba(45, 212, 191, 0.1);
+}
+
+.form-label {
+  font-size: 0.9rem;
+  color: #475569;
+  margin-bottom: 0.5rem;
+}
+
+/* Gradient Button */
+.btn-gradient {
+  background: linear-gradient(135deg, #2dd4bf, #3b82f6);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  padding: 0.75rem 1.25rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(45, 212, 191, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  min-height: 48px;
+  font-size: 0.95rem;
+  white-space: nowrap;
+}
+
+.btn-gradient i {
+  font-size: 1.1rem;
+}
+
+.btn-gradient:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(45, 212, 191, 0.4);
+  color: white;
+}
+
+.btn-gradient:active {
+  transform: translateY(0);
+}
+
+/* Slots Section */
+.slots-section {
+  background: white;
+  padding: 2.5rem;
+  border-radius: 20px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  border: 1px solid rgba(45, 212, 191, 0.1);
+}
+
+.section-header h4 {
+  color: #1e293b;
+}
+
+/* Time Slots Wrapper */
+.time-slots-wrapper {
+  height: 100%;
+}
+
+/* Time Slots Grid */
+.time-slots-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+  gap: 0.875rem;
+}
+
+.time-slot-item {
+  position: relative;
+}
+
+.time-slot-label {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 1rem;
+  border: 2px solid #e2e8f0;
+  border-radius: 12px;
+  background: white;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-weight: 500;
+  color: #475569;
+}
+
+.time-slot-label i {
+  font-size: 1.2rem;
+  color: #94a3b8;
+}
+
+.time-slot-label:hover {
+  border-color: #2dd4bf;
+  background: rgba(45, 212, 191, 0.05);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(45, 212, 191, 0.15);
+}
+
+.btn-check:checked + .time-slot-label {
+  background: linear-gradient(135deg, #2dd4bf, #3b82f6);
+  border-color: transparent;
+  color: white;
+  box-shadow: 0 6px 20px rgba(45, 212, 191, 0.3);
+}
+
+.btn-check:checked + .time-slot-label i {
+  color: white;
+}
+
+/* Notes Card */
+.notes-card {
+  background: #f8fafc;
+  padding: 1.5rem;
+  border-radius: 16px;
+  border: 2px dashed #cbd5e1;
+  display: flex;
+  flex-direction: column;
+}
+
+.notes-card textarea {
+  flex: 1;
+  resize: none;
+  background: white;
+}
+
+/* Confirm Button */
+.btn-confirm-booking {
+  background: linear-gradient(135deg, #10b981, #059669);
+  color: white;
+  border: none;
+  border-radius: 50px;
+  padding: 1rem 3rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  box-shadow: 0 6px 20px rgba(16, 185, 129, 0.3);
+}
+
+.btn-confirm-booking:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 30px rgba(16, 185, 129, 0.4);
+  color: white;
+}
+
+/* No Slots Card */
+.no-slots-card {
+  background: white;
+  padding: 3rem;
+  border-radius: 20px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  border: 2px dashed #fbbf24;
+}
+
+.no-slots-card i {
+  font-size: 4rem;
+  color: #fbbf24;
+}
+
+/* Responsive */
+@media (max-width: 991px) {
+  .time-slots-grid {
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  }
+
+  .notes-card textarea {
+    min-height: 150px;
+  }
+}
+
+@media (max-width: 768px) {
+  .appointment-booking-page {
+    padding: 2rem 1rem;
+  }
+
+  .booking-form-card,
+  .slots-section {
+    padding: 1.5rem;
+  }
+
+  .booking-header h2 {
+    font-size: 1.5rem;
+  }
+
+  .btn-gradient {
+    padding: 0.75rem 1rem;
+    font-size: 0.9rem;
+    min-height: 46px;
+  }
+
+  .btn-gradient i {
+    font-size: 1rem;
+  }
+
+  .time-slots-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.75rem;
+  }
+
+  .time-slot-label {
+    padding: 0.75rem 0.5rem;
+    font-size: 0.9rem;
+  }
+
+  .btn-confirm-booking {
+    width: 100%;
+    padding: 1rem 2rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .btn-gradient span {
+    font-size: 0.85rem;
+  }
+
+  .time-slots-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}

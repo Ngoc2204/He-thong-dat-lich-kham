@@ -6,6 +6,8 @@ use Illuminate\Database\Seeder;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Role;
+use Spatie\Permission\Models\Permission;
+
 
 class RolesAndAdminSeeder extends Seeder
 {
@@ -53,5 +55,29 @@ class RolesAndAdminSeeder extends Seeder
                 ['start_time' => '09:00', 'end_time' => '17:00', 'slot_minutes' => 30]
             );
         }
+
+        \App\Models\Appointment::firstOrCreate([
+            'patient_id' => $patientUser->id,
+            'dentist_id' => \App\Models\Dentist::first()->id,
+            'service_id' => \App\Models\Service::first()->id,
+            'starts_at' => now()->addDays(1)->setTime(10, 0),
+            'ends_at' => now()->addDays(1)->setTime(10, 30),
+            'status' => 'confirmed',
+            'notes' => 'Hẹn khám thử nghiệm.',
+        ]);
+
+        // Thêm quyền demo
+        $permissions = [
+            'manage appointments',
+            'manage dentists',
+            'manage services',
+            'view reports',
+        ];
+        foreach ($permissions as $perm) {
+            Permission::firstOrCreate(['name' => $perm, 'guard_name' => 'web']);
+        }
+
+        // Gán tất cả quyền cho admin
+        $admin->givePermissionTo($permissions);
     }
 }

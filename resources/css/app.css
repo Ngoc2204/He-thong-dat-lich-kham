@@ -5,7 +5,60 @@
 @source '../**/*.blade.php';
 @source '../**/*.js';
 
+@import './appointments/create.css';
+@import './appointments/mine.css';
+
 @theme {
-    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
-        'Segoe UI Symbol', 'Noto Color Emoji';
+  --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+    'Segoe UI Symbol', 'Noto Color Emoji';
+}
+
+body {
+  overflow-x: hidden;
+}
+
+main {
+  padding: 0;
+  margin: 0;
+  width: 100%;
+}
+
+main > .container {
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+}
+
+/* Banner slider */
+.swiper-slide {
+  overflow: hidden;
+}
+
+.slide-content h1,
+.slide-content p,
+.slide-content .btn {
+  will-change: transform, opacity;
+}
+
+/* Navigation styles */
+.nav-link {
+  color: #1e293b !important;
+  font-weight: 500;
+  transition: color 0.2s, border-bottom 0.2s;
+}
+.nav-link:hover {
+  color: #14b8a6 !important;
+}
+.navbar .btn {
+  box-shadow: 0 2px 6px rgba(59, 130, 246, 0.25);
+  transition: all 0.3s ease;
+}
+.navbar .btn:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
+}
+.border-teal {
+  border-color: #14b8a6 !important;
+}
+.text-teal {
+  color: #14b8a6 !important;
 }

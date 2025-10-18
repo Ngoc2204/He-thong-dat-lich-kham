@@ -1,4 +1,3 @@
--- Dental Appointment System schema (MySQL 8). Matches migrations in /database/migrations.
 
 CREATE TABLE `users` (
   `id` bigint unsigned NOT NULL AUTO_INCREMENT,

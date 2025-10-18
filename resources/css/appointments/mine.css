@@ -1,0 +1,327 @@
+.my-appointments-page {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 3rem 1rem;
+}
+
+/* Header */
+.page-header .icon-wrapper {
+  width: 80px;
+  height: 80px;
+  margin: 0 auto;
+  background: linear-gradient(135deg, #2dd4bf, #3b82f6);
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 10px 30px rgba(45, 212, 191, 0.3);
+}
+
+.page-header .icon-wrapper i {
+  font-size: 2.5rem;
+  color: white;
+}
+
+.page-header h2 {
+  font-size: 2rem;
+  color: #1e293b;
+}
+
+/* Appointment Card */
+.appointment-card {
+  background: white;
+  border-radius: 20px;
+  padding: 1.75rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  border: 1px solid rgba(45, 212, 191, 0.1);
+  transition: all 0.3s ease;
+}
+
+.appointment-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 30px rgba(45, 212, 191, 0.15);
+}
+
+/* Date & Time Section */
+.appointment-datetime {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.date-badge,
+.time-badge {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1rem;
+  background: linear-gradient(135deg, #f1f5f9, #e2e8f0);
+  border-radius: 12px;
+  font-weight: 600;
+  color: #475569;
+}
+
+.date-badge i,
+.time-badge i {
+  font-size: 1.25rem;
+  color: #2dd4bf;
+}
+
+.date-badge {
+  background: linear-gradient(135deg, #dbeafe, #bfdbfe);
+  color: #1e40af;
+}
+
+.date-badge i {
+  color: #3b82f6;
+}
+
+/* Details Section */
+.appointment-details {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.detail-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+}
+
+.detail-item i {
+  font-size: 1.25rem;
+  margin-top: 0.125rem;
+}
+
+.detail-item > div {
+  display: flex;
+  flex-direction: column;
+  gap: 0.125rem;
+}
+
+.detail-label {
+  font-size: 0.75rem;
+  color: #94a3b8;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-weight: 600;
+}
+
+.detail-value {
+  font-size: 0.95rem;
+  color: #1e293b;
+  font-weight: 500;
+}
+
+/* Status Badge */
+.appointment-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+
+.status-badge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1rem;
+  border-radius: 50px;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.status-badge i {
+  font-size: 1.1rem;
+}
+
+.status-pending {
+  background: linear-gradient(135deg, #fef3c7, #fde68a);
+  color: #92400e;
+}
+
+.status-confirmed {
+  background: linear-gradient(135deg, #d1fae5, #a7f3d0);
+  color: #065f46;
+}
+
+.status-completed {
+  background: linear-gradient(135deg, #dbeafe, #bfdbfe);
+  color: #1e40af;
+}
+
+.status-cancelled {
+  background: linear-gradient(135deg, #fee2e2, #fecaca);
+  color: #991b1b;
+}
+
+/* Cancel Button */
+.btn-cancel {
+  background: white;
+  color: #dc2626;
+  border: 2px solid #fecaca;
+  border-radius: 12px;
+  padding: 0.625rem 1.25rem;
+  font-weight: 600;
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
+  width: 100%;
+}
+
+.btn-cancel:hover {
+  background: #fee2e2;
+  border-color: #dc2626;
+  color: #991b1b;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(220, 38, 38, 0.2);
+}
+
+/* Empty State */
+.empty-state {
+  background: white;
+  border-radius: 20px;
+  padding: 4rem 2rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  border: 2px dashed #cbd5e1;
+}
+
+.empty-state i {
+  font-size: 5rem;
+  color: #cbd5e1;
+}
+
+.empty-state h4 {
+  color: #1e293b;
+}
+
+/* Gradient Button */
+.btn-gradient {
+  background: linear-gradient(135deg, #2dd4bf, #3b82f6);
+  color: white;
+  border: none;
+  border-radius: 50px;
+  padding: 0.875rem 2rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(45, 212, 191, 0.3);
+}
+
+.btn-gradient:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(45, 212, 191, 0.4);
+  color: white;
+}
+
+/* Pagination */
+.pagination-wrapper {
+  display: flex;
+  justify-content: center;
+}
+
+.pagination-wrapper .pagination {
+  gap: 0.5rem;
+}
+
+.pagination-wrapper .page-link {
+  border-radius: 10px;
+  border: 2px solid #e2e8f0;
+  color: #475569;
+  padding: 0.5rem 0.875rem;
+  font-weight: 500;
+}
+
+.pagination-wrapper .page-link:hover {
+  background: #f1f5f9;
+  border-color: #2dd4bf;
+  color: #2dd4bf;
+}
+
+.pagination-wrapper .page-item.active .page-link {
+  background: linear-gradient(135deg, #2dd4bf, #3b82f6);
+  border-color: transparent;
+  color: white;
+}
+
+/* Responsive */
+@media (max-width: 991px) {
+  .appointment-datetime {
+    flex-direction: row;
+    margin-bottom: 1rem;
+  }
+
+  .date-badge,
+  .time-badge {
+    flex: 1;
+  }
+}
+
+@media (max-width: 768px) {
+  .my-appointments-page {
+    padding: 2rem 1rem;
+  }
+
+  .appointment-card {
+    padding: 1.5rem;
+  }
+
+  .page-header h2 {
+    font-size: 1.5rem;
+  }
+
+  .page-header .icon-wrapper {
+    width: 70px;
+    height: 70px;
+  }
+
+  .page-header .icon-wrapper i {
+    font-size: 2rem;
+  }
+
+  .appointment-details {
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+  }
+
+  .detail-item {
+    gap: 0.5rem;
+  }
+
+  .detail-item i {
+    font-size: 1.1rem;
+  }
+
+  .status-badge {
+    font-size: 0.85rem;
+    padding: 0.625rem 0.875rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .appointment-card {
+    padding: 1.25rem;
+  }
+
+  .date-badge,
+  .time-badge {
+    font-size: 0.85rem;
+    padding: 0.625rem 0.75rem;
+  }
+
+  .date-badge i,
+  .time-badge i {
+    font-size: 1rem;
+  }
+
+  .detail-value {
+    font-size: 0.9rem;
+  }
+
+  .empty-state {
+    padding: 3rem 1.5rem;
+  }
+
+  .empty-state i {
+    font-size: 3.5rem;
+  }
+}
