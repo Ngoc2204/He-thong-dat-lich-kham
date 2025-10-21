@@ -450,13 +450,13 @@
             <!-- Work Menu -->
             <div class="menu-section">
                 <div class="menu-section-title">Công việc</div>
-                <a href=""
+                <a href="{{ route('dentist.appointments.index') }}"
                     class="menu-item {{ request()->routeIs('dentist.appointments*') ? 'active' : '' }}">
                     <i class="bi bi-calendar-check"></i>
                     <span>Lịch hẹn</span>
-                    
                 </a>
-                <a href=""
+
+                <a href="{{ route('dentist.schedules.index') }}"
                     class="menu-item {{ request()->routeIs('dentist.schedules*') ? 'active' : '' }}">
                     <i class="bi bi-calendar2-week"></i>
                     <span>Lịch làm việc</span>
@@ -466,22 +466,18 @@
             <!-- Patient Menu -->
             <div class="menu-section">
                 <div class="menu-section-title">Bệnh nhân</div>
-                <a href=""
+                <a href="{{ route('dentist.patients.index') }}"
                     class="menu-item {{ request()->routeIs('dentist.patients*') ? 'active' : '' }}">
                     <i class="bi bi-people"></i>
                     <span>Danh sách bệnh nhân</span>
                 </a>
-                <a href=""
-                    class="menu-item {{ request()->routeIs('dentist.medical-records*') ? 'active' : '' }}">
-                    <i class="bi bi-file-medical"></i>
-                    <span>Hồ sơ y tế</span>
-                </a>
+
             </div>
 
             <!-- Reporting Menu -->
             <div class="menu-section">
                 <div class="menu-section-title">Báo cáo</div>
-                <a href=""
+                <a href="{{ route('dentist.reports.index') }}"
                     class="menu-item {{ request()->routeIs('dentist.reports*') ? 'active' : '' }}">
                     <i class="bi bi-bar-chart"></i>
                     <span>Báo cáo</span>
@@ -489,15 +485,7 @@
             </div>
 
             <!-- Account Menu -->
-            <div class="menu-section">
-                <div class="menu-section-title">Tài khoản</div>
-                <a href="{{ route('profile.edit') }}"
-                    class="menu-item {{ request()->routeIs('profile.*') ? 'active' : '' }}">
-                    <i class="bi bi-person-circle"></i>
-                    <span>Hồ sơ</span>
-                </a>
-                
-            </div>
+            
         </nav>
     </aside>
 
@@ -519,7 +507,7 @@
             </div>
 
             <div class="header-right">
-                
+
 
                 <!-- User Menu -->
                 <div class="dropdown">
@@ -534,11 +522,7 @@
                         <i class="bi bi-chevron-down d-none d-md-block"></i>
                     </div>
                     <ul class="dropdown-menu dropdown-menu-end">
-                        <li><a class="dropdown-item" href="{{ route('profile.edit') }}">
-                                <i class="bi bi-person"></i>Hồ sơ cá nhân
-                            </a></li>
                         
-                        <li>
                             <hr class="dropdown-divider">
                         </li>
                         <li>

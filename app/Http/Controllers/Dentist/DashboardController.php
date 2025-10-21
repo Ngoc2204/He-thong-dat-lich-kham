@@ -15,14 +15,14 @@ class DashboardController extends Controller
         // Lấy appointments hôm nay
         $appointments = Appointment::where('dentist_id', $dentist->id)
             ->whereDate('starts_at', today())
-            ->with(['patient.user', 'service'])
+            ->with(['patient', 'service'])
             ->orderBy('starts_at')
             ->get();
         
         // Lấy pending appointments
         $pendingList = Appointment::where('dentist_id', $dentist->id)
             ->where('status', 'pending')
-            ->with(['patient.user', 'service'])
+            ->with(['patient', 'service'])
             ->orderBy('starts_at')
             ->take(5)
             ->get();

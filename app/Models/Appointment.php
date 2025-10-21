@@ -25,11 +25,11 @@ class Appointment extends Model
 
     public function dentist()
     {
-        return $this->belongsTo(Dentist::class);
+        return $this->belongsTo(Dentist::class,'dentist_id');
     }
 
     public function service()
     {
-        return $this->belongsTo(Service::class);
+        return $this->belongsTo(Service::class,'service_id');
     }
 }

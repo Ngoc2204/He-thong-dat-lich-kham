@@ -128,10 +128,10 @@
                                             <i class="bi bi-person-circle"></i>
                                         </div>
                                         <div>
-                                            <h6 class="patient-name">{{ $appointment->patient->user->name }}</h6>
+                                            <h6 class="patient-name">{{ $appointment->patient->name }}</h6>
                                             <span class="patient-phone">
                                                 <i class="bi bi-telephone me-1"></i>
-                                                {{ $appointment->patient->user->phone ?? 'Chưa cập nhật' }}
+                                                {{ $appointment->patient->phone ?? 'Chưa cập nhật' }}
                                             </span>
                                         </div>
                                     </div>
@@ -251,7 +251,7 @@
                         @forelse($pendingList as $pending)
                             <div class="pending-item">
                                 <div class="pending-info">
-                                    <h6 class="pending-patient">{{ $pending->patient->user->name }}</h6>
+                                    <h6 class="pending-patient">{{ $pending->patient->name }}</h6>
                                     <span class="pending-time">
                                         <i class="bi bi-clock"></i>
                                         {{ $pending->starts_at->format('d/m H:i') }}
