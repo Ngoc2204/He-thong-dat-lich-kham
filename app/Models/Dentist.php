@@ -12,7 +12,14 @@ class Dentist extends Model
     protected $fillable = [
         'user_id',
         'specialty',
+        'avatar',
+        'degree',
+        'bio',
+        'experience_years',
+        'email',
+        'phone',
     ];
+
 
     public function user()
     {

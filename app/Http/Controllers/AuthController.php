@@ -32,7 +32,7 @@ class AuthController extends Controller
             if ($user->hasRole('dentist')) {
                 return redirect()->route('dentist.dashboard');
             }
-            return redirect()->route('appointments.create');
+            return redirect()->route('appointments.home');
         }
 
         return back()->withErrors(['email' => 'Invalid credentials'])->onlyInput('email');
@@ -63,7 +63,7 @@ class AuthController extends Controller
         $user->assignRole('patient');
 
         Auth::login($user);
-        return redirect()->route('appointments.create');
+        return redirect()->route('appointments.home');
     }
 
     public function logout(Request $request)
@@ -71,6 +71,6 @@ class AuthController extends Controller
         Auth::logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
-        return redirect()->route('home');
+        return redirect()->route('appointments.home');
     }
 }

@@ -29,8 +29,13 @@ class User extends Authenticatable implements MustVerifyEmail
         'password' => 'hashed',
     ];
 
-    public function dentistProfile()
+    public function dentist()
     {
         return $this->hasOne(Dentist::class);
+    }
+
+    public function appointments()
+    {
+        return $this->hasMany(Appointment::class, 'patient_id');
     }
 }
