@@ -16,6 +16,7 @@ use App\Http\Controllers\Admin\PatientController as AdminPatientController;
 use App\Http\Controllers\Dentist\DentistAppointmentController;
 use App\Http\Controllers\Dentist\DentistPatientController;
 use App\Http\Controllers\Dentist\DentistReportController;
+use App\Http\Controllers\SocialAuthController;
 
 // Home
 Route::get('/', function () {
@@ -35,8 +36,15 @@ Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
 Route::post('/login', [AuthController::class, 'login']);
 Route::get('/register', [AuthController::class, 'showRegister'])->name('register');
 Route::post('/register', [AuthController::class, 'register']);
-Route::post('/logout', [AuthController::class, 'logout'])->name('logout')->middleware('auth');
 
+//Google
+Route::post('/logout', [AuthController::class, 'logout'])->name('logout')->middleware('auth');
+Route::get('auth/google', [SocialAuthController::class, 'redirectToGoogle'])->name('auth.google');
+Route::get('auth/google/callback', [SocialAuthController::class, 'handleGoogleCallback']);
+
+//Facebook 
+Route::get('auth/facebook', [SocialAuthController::class, 'redirectToFacebook'])->name('auth.facebook');
+Route::get('auth/facebook/callback', [SocialAuthController::class, 'handleFacebookCallback']);
 
 // Patient booking & my appointments
 Route::middleware(['auth', 'role:patient'])->group(function () {
@@ -54,9 +62,9 @@ Route::prefix('dentist')->middleware(['auth', 'role:dentist'])->group(function (
     Route::get('/schedules/create', [DentistScheduleController::class, 'create'])->name('dentist.schedules.create');
     Route::post('/schedules', [DentistScheduleController::class, 'store'])->name('dentist.schedules.store');
     Route::get('/appointments', [DentistAppointmentController::class, 'index'])
-            ->name('dentist.appointments.index');
+        ->name('dentist.appointments.index');
     Route::post('/appointments/{appointment}/status', [DentistAppointmentController::class, 'updateStatus'])
-            ->name('dentist.appointments.status');
+        ->name('dentist.appointments.status');
     Route::get('/patients', [DentistPatientController::class, 'index'])->name('dentist.patients.index');
     Route::get('/reports', [DentistReportController::class, 'index'])->name('dentist.reports.index');
 });
